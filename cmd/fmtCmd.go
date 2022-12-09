@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"epoch-convertor/pkg"
+	"epc/pkg"
 	"github.com/spf13/cobra"
 	"time"
 )

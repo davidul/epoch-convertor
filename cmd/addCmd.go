@@ -39,5 +39,4 @@ func init() {
 	addCmd.Flags().Int("year", 0, "+-year")
 	addCmd.Flags().Int("month", 0, "+-month")
 	addCmd.Flags().Int("day", 0, "+-day")
-	rootCmd.AddCommand(addCmd)
 }

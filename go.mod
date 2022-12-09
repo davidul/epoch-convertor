@@ -1,4 +1,4 @@
-module epoch-convertor
+module epc
 
 go 1.18
 

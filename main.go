@@ -1,7 +1,7 @@
 package main
 
 import (
-	"epoch-convertor/cmd"
+	"epc/cmd"
 )
 
 func main() {
