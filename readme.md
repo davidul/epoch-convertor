@@ -16,7 +16,7 @@ Enable disable seconds/milliseconds with
 `--seconds` and `--millis`
 
 ```shell
-./epc --millis --seconds=false                                                                 ✔  base   15:08:39  
+./epc --millis --seconds=false
 Time in custom format 2022-12-09T15:12:57+01:00
 Unix Millis = 1670595177743 
 ```
@@ -25,7 +25,7 @@ Move time there and back with `--day`, `--month` and
 `--year`. Use +/- to add/subtract from current date.
 
 ```shell
-./epc --day 100 --month -3 --year 10                                                           ✔  base   15:12:57  
+./epc --day 100 --month -3 --year 10                                                           
 Time in custom format 2032-12-18T15:41:21+01:00
 Unix seconds = 1986993681 
 ```
