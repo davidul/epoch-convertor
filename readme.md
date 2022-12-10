@@ -30,11 +30,31 @@ Time in custom format 2032-12-18T15:41:21+01:00
 Unix seconds = 1986993681 
 ```
 
+`now` just prints current data with unix timestamps.
+
+```shell
+./epc now
+Current time is: 2022-12-10T07:14:04 
+Unix epoch seconds: 1670652844 
+Unix epoch miliseconds: 1670652844873 
+```
+
+`stopwatch` runs stop watch in terminal
+```shell
+./epc stopwatch 
+00:00:05
+```
+
+`parse` converts unix time stamp to date
+```shell
+./epc parse 1234556666 
+Thursday, 01-Jan-70 01:00:00 CET 
+```
 
 fmt - prints current time in different formats
 
 ```shell
-./epoch-converter fmt
+./epc fmt
 ANSIC    Wed Dec  7 06:22:00 2022 
 Kitchen  6:22AM 
 RFC822   07 Dec 22 06:22 CET 
