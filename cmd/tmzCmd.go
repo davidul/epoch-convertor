@@ -3,11 +3,12 @@ package cmd
 import (
 	"epc/pkg"
 	"fmt"
-	"github.com/davidul/go-vic/linkedlist"
 	"github.com/spf13/cobra"
+	"sort"
+	"time"
 )
 
-var iso map[string]linkedlist.LinkedList[pkg.ZoneInfo]
+var iso map[string]pkg.ZoneInfo
 
 var tmzCmd = &cobra.Command{
 	Use:   "tz",
@@ -22,10 +23,11 @@ var tmzCmd = &cobra.Command{
 		if err3 != nil {
 			fmt.Println(err3)
 		}
+		fmt.Println(listFlag)
 
 		if listFlag {
-
-			array := pkg.ZoneListSortedArray(iso)
+			array := pkg.ZoneList(iso)
+			sort.Strings(array)
 			for _, k := range array {
 				fmt.Println(k)
 			}
@@ -37,15 +39,14 @@ var tmzCmd = &cobra.Command{
 		}
 
 		info := iso[zoneFromCmd]
-		fmt.Println(info)
 
-		//now := time.Now()
-		//location, err := time.LoadLocation(info)
-		//fmt.Println(location.String())
-		//if err != nil {
-		//	fmt.Println(err)
-		//}
-		//fmt.Println(now.In(location))
+		now := time.Now()
+		location, err := time.LoadLocation(info.TimeZone)
+		fmt.Println(location.String())
+		if err != nil {
+			fmt.Println(err)
+		}
+		pkg.PrintDate(now.In(location))
 	},
 }
 

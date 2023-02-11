@@ -2,9 +2,7 @@ package pkg
 
 import (
 	"fmt"
-	"github.com/davidul/go-vic/linkedlist"
 	"io/ioutil"
-	"sort"
 	"strings"
 )
 
@@ -49,14 +47,16 @@ func CountryCodes() map[string]string {
 	return tzMap
 }
 
-func ReadZoneInfoISO() map[string]linkedlist.LinkedList[ZoneInfo] {
+// ReadZoneInfoISO read zone.tab file
+// returns map, key is time zone
+func ReadZoneInfoISO() map[string]ZoneInfo {
 	file, err := ioutil.ReadFile("/usr/share/zoneinfo/zone.tab")
 	if err != nil {
 		fmt.Println(err)
 		return nil
 	}
 
-	tzMap := make(map[string]linkedlist.LinkedList[ZoneInfo])
+	tzMap := make(map[string]ZoneInfo)
 
 	lines := strings.Split(string(file), "\n")
 
@@ -85,38 +85,21 @@ func ReadZoneInfoISO() map[string]linkedlist.LinkedList[ZoneInfo] {
 			comments:    comment,
 		}
 
-		list, exists := tzMap[split[0]]
-		if exists {
-			list.Add(info)
-		} else {
-			l := linkedlist.LinkedList[ZoneInfo]{}
-			l.Add(info)
-			tzMap[split[0]] = l
-		}
+		tzMap[split[2]] = info
 
 	}
 
 	return tzMap
 }
 
-func ZoneList(zoneMap map[string]linkedlist.LinkedList[ZoneInfo]) linkedlist.LinkedList[ZoneInfo] {
+func ZoneList(zoneMap map[string]ZoneInfo) []string {
 
-	l := linkedlist.LinkedList[ZoneInfo]{}
-	for _, v := range zoneMap {
-		l.AddAll(&v)
+	i := make([]string, len(zoneMap))
+	cnt := 0
+	for k, _ := range zoneMap {
+		i[cnt] = k
+		cnt++
 	}
 
-	l.ToArray()
-	return l
-}
-
-func ZoneListSortedArray(zoneMap map[string]linkedlist.LinkedList[ZoneInfo]) []string {
-	list := ZoneList(zoneMap)
-	array := list.ToArray()
-	sarray := make([]string, len(array))
-	for i, a := range array {
-		sarray[i] = a.TimeZone
-	}
-	sort.Strings(sarray)
-	return sarray
+	return i
 }
