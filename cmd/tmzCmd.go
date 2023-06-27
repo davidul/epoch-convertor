@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"epc/models"
 	"epc/pkg"
 	"fmt"
 	"github.com/spf13/cobra"
@@ -8,22 +9,18 @@ import (
 	"time"
 )
 
-var iso map[string]pkg.ZoneInfo
+var iso map[string]*models.ZoneInfo
 
 var tmzCmd = &cobra.Command{
 	Use:   "tz",
 	Long:  "tz",
 	Short: "tz",
 	Run: func(cmd *cobra.Command, args []string) {
-		for i := range args {
-			fmt.Println(i)
-		}
 
-		listFlag, err3 := cmd.Flags().GetBool("list")
-		if err3 != nil {
-			fmt.Println(err3)
+		listFlag, err := cmd.Flags().GetBool("list")
+		if err != nil {
+			fmt.Println(err)
 		}
-		fmt.Println(listFlag)
 
 		if listFlag {
 			array := pkg.ZoneList(iso)
@@ -42,7 +39,7 @@ var tmzCmd = &cobra.Command{
 
 		now := time.Now()
 		location, err := time.LoadLocation(info.TimeZone)
-		fmt.Println(location.String())
+		fmt.Fprintf(cmd.OutOrStdout(), location.String())
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -53,6 +50,6 @@ var tmzCmd = &cobra.Command{
 func init() {
 	iso = pkg.ReadZoneInfoISO()
 	tmzCmd.Flags().String("timezone", "UTC", "timezone IANA string")
-	tmzCmd.Flags().Bool("list", true, "list timezones")
-	rootCmd.AddCommand(tmzCmd)
+	tmzCmd.Flags().Bool("list", false, "list timezones")
+	RootCmd.AddCommand(tmzCmd)
 }

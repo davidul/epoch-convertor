@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var rootCmd = &cobra.Command{
+var RootCmd = &cobra.Command{
 	Use:   "epc",
 	Short: "epc",
 	Long:  "epc",
@@ -52,7 +52,7 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
-	err := rootCmd.Execute()
+	err := RootCmd.Execute()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -60,10 +60,11 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().String("format", time.RFC3339, "format of date time")
-	rootCmd.Flags().Int("year", 0, "+/-year")
-	rootCmd.Flags().Int("month", 0, "+/-month")
-	rootCmd.Flags().Int("day", 0, "+/-day")
-	rootCmd.Flags().Bool("millis", false, "unix time in millis")
-	rootCmd.Flags().Bool("seconds", true, "unix time in seconds")
+	RootCmd.Flags().String("format", time.RFC3339, "format of date time")
+	RootCmd.Flags().Int("year", 0, "+/-year")
+	RootCmd.Flags().Int("month", 0, "+/-month")
+	RootCmd.Flags().Int("day", 0, "+/-day")
+	RootCmd.Flags().Bool("millis", false, "unix time in millis")
+	RootCmd.Flags().Bool("seconds", true, "unix time in seconds")
+
 }

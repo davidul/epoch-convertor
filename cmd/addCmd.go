@@ -26,12 +26,12 @@ var addCmd = &cobra.Command{
 		now := time.Now()
 		date := now.AddDate(year, month, day)
 
-		fmt.Printf("\033 \u2554 \n")
-		fmt.Printf("\u2551 \033[38;5;156m Now %s \n", now.Format(time.UnixDate))
-		fmt.Printf("Add %d year(s) %d month(s) %d day(s) \n", year, month, day)
-		fmt.Printf("%s \n", date.Format(time.UnixDate))
-		fmt.Printf("\t Unix epoch seconds: %d \n", date.Unix())
-		fmt.Printf("\t Unix epoch miliseconds: %d \n", now.UnixMilli())
+		fmt.Fprintf(cmd.OutOrStdout(), "\033 \u2554 \n")
+		fmt.Fprintf(cmd.OutOrStdout(), "\u2551 \033[38;5;156m Now %s \n", now.Format(time.UnixDate))
+		fmt.Fprintf(cmd.OutOrStdout(), "Add %d year(s) %d month(s) %d day(s) \n", year, month, day)
+		fmt.Fprintf(cmd.OutOrStdout(), "%s \n", date.Format(time.UnixDate))
+		fmt.Fprintf(cmd.OutOrStdout(), "\t Unix epoch seconds: %d \n", date.Unix())
+		fmt.Fprintf(cmd.OutOrStdout(), "\t Unix epoch miliseconds: %d \n", now.UnixMilli())
 	},
 }
 

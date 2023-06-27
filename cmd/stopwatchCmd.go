@@ -51,13 +51,13 @@ var stopwatchCmd = &cobra.Command{
 				hourStr = strconv.Itoa(hours)
 			}
 			//fmt.Printf("\033[0;0H")
-			fmt.Printf("\033[2K\r")
-			fmt.Printf("%s:%s:%s", hourStr, minStr, secStr)
+			fmt.Fprintf(cmd.OutOrStdout(), "\033[2K\r")
+			fmt.Fprintf(cmd.OutOrStdout(), "%s:%s:%s", hourStr, minStr, secStr)
 		}
 
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(stopwatchCmd)
+	RootCmd.AddCommand(stopwatchCmd)
 }
