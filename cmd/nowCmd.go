@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"time"
 )
 
@@ -12,8 +13,8 @@ var nowCmd = &cobra.Command{
 	Long:  "now displays current time in unix epoch",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		now := time.Now()
-
-		_, err := fmt.Fprintf(cmd.OutOrStdout(), "Current time is: %s \n", now.Format("2006-01-02T15:04:05"))
+		_, err := fmt.Fprintf(cmd.OutOrStdout(), "Current date and time is: %s \n",
+			now.Format(viper.GetString("default-format")))
 		if err != nil {
 			return err
 		}
@@ -26,6 +27,15 @@ var nowCmd = &cobra.Command{
 			return err
 		}
 
+		_, err = fmt.Fprintf(cmd.OutOrStdout(), "Unix epoch microseconds: %d \n", now.UnixMicro())
+		if err != nil {
+			return err
+		}
+
+		t2 := time.Now()
+		name, offset := t2.Zone()
+		fmt.Fprintf(cmd.OutOrStdout(), "Local Timezone: %s\n", name)
+		fmt.Fprintf(cmd.OutOrStdout(), "Offset: %d\n", offset)
 		return err
 	},
 }
