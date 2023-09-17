@@ -12,6 +12,28 @@ Time in custom format 2022-12-09T15:03:14+01:00
 Unix seconds = 1670594594
 ```
 
+Available flags
+
+```shell
+      --day int         +/-day
+      --month int       +/-month
+      --year int        +/-year
+      --format string   format of date time (default "2006-01-02T15:04:05Z07:00")
+  -h, --help            help for epc
+      --millis          unix time in millis
+      --seconds         unix time in seconds (default true)
+```
+
+Available commands:
+    
+```shell
+    fmt         prints current time in different formats
+    help        Help about any command
+    now         prints current time
+    parse       converts unix time stamp to date
+    stopwatch   runs stop watch in terminal
+  ```
+
 Enable disable seconds/milliseconds with
 `--seconds` and `--millis`
 

@@ -4,13 +4,14 @@ import (
 	"epc/pkg"
 	"fmt"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"time"
 )
 
 var RootCmd = &cobra.Command{
 	Use:   "epc",
 	Short: "epc",
-	Long:  "epc",
+	Long:  "epc outputs current time. You can add/subtract day, month and year to it.",
 	Run: func(cmd *cobra.Command, args []string) {
 		format, err := cmd.Flags().GetString("format")
 		if err != nil {
@@ -60,6 +61,15 @@ func Execute() {
 }
 
 func init() {
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath("config")
+	err := viper.ReadInConfig()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	RootCmd.Flags().String("format", time.RFC3339, "format of date time")
 	RootCmd.Flags().Int("year", 0, "+/-year")
 	RootCmd.Flags().Int("month", 0, "+/-month")

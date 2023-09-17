@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"epc/models"
 	"fmt"
 	"time"
 )
@@ -39,4 +40,39 @@ func PrintUnix(t time.Time, millis bool, seconds bool) {
 func PrintTimeFormatted(t time.Time, format string) string {
 	s := t.Format(format)
 	return s
+}
+
+func TimeInfo() *models.TimeInfo {
+	now := time.Now()
+	name, offset := now.Zone()
+	return &models.TimeInfo{
+		Now:    now,
+		Format: time.RFC850,
+		TimeZoneInfo: &models.TimeZoneInfo{
+			ZoneInfo: nil,
+			Name:     name,
+			Offset:   offset,
+		},
+	}
+}
+
+func Week() {
+	for i := -1; i < 7; i++ {
+		now := time.Now()
+		now = now.AddDate(0, 0, i)
+		fmt.Println(now)
+	}
+
+	now := time.Now()
+	weekday := now.Weekday()
+	switch weekday {
+	case time.Sunday:
+		now.AddDate(0, 0, -7)
+	case time.Tuesday:
+		now = now.AddDate(0, 0, -1)
+	case time.Wednesday:
+		now.AddDate(0, 0, -2)
+	}
+
+	fmt.Println(now)
 }

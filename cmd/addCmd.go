@@ -1,10 +1,13 @@
 package cmd
 
 import (
+	"epc/pkg"
 	"fmt"
 	"github.com/spf13/cobra"
 	"time"
 )
+
+var t pkg.StaticTime
 
 var addCmd = &cobra.Command{
 	Use:   "add year/month/date. Can be positive or negative value.",
@@ -23,6 +26,8 @@ var addCmd = &cobra.Command{
 		if err != nil {
 			fmt.Println(err)
 		}
+		//t = &pkg.RealTime{}
+		//t.Now()
 		now := time.Now()
 		date := now.AddDate(year, month, day)
 
@@ -39,4 +44,5 @@ func init() {
 	addCmd.Flags().Int("year", 0, "+-year")
 	addCmd.Flags().Int("month", 0, "+-month")
 	addCmd.Flags().Int("day", 0, "+-day")
+	RootCmd.AddCommand(addCmd)
 }
