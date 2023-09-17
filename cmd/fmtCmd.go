@@ -7,14 +7,14 @@ import (
 )
 
 var fmtCmd = &cobra.Command{
-	Use:   "fmt",
-	Long:  "fmt",
-	Short: "fmt",
+	Use:   "fmt with no arguments.",
+	Long:  "fmt prints all predefined available time formats.",
+	Short: "fmt print time formats.",
 	Run: func(cmd *cobra.Command, args []string) {
 		now := time.Now()
 		pkg.PrintFormats(now)
 	}}
 
 func init() {
-	rootCmd.AddCommand(fmtCmd)
+	RootCmd.AddCommand(fmtCmd)
 }
