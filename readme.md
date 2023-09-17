@@ -14,7 +14,7 @@ Unix seconds = 1670594594
 
 Available flags
 
-```shell
+```
       --day int         +/-day
       --month int       +/-month
       --year int        +/-year
@@ -28,6 +28,7 @@ Available commands:
     
 ```shell
     fmt         prints current time in different formats
+    add         adds time to current time
     help        Help about any command
     now         prints current time
     parse       converts unix time stamp to date

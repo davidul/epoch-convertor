@@ -52,6 +52,11 @@ var RootCmd = &cobra.Command{
 	},
 }
 
+var t pkg.StaticTime
+
+func SetStaticTime(time pkg.StaticTime) {
+	t = time
+}
 func Execute() {
 	err := RootCmd.Execute()
 	if err != nil {

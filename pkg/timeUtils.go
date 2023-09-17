@@ -3,18 +3,19 @@ package pkg
 import (
 	"epc/models"
 	"fmt"
+	"github.com/spf13/cobra"
 	"time"
 )
 
-func PrintFormats(t time.Time) {
-	fmt.Printf("ANSIC    %s \n", t.Format(time.ANSIC))
-	fmt.Printf("Kitchen  %s \n", t.Format(time.Kitchen))
-	fmt.Printf("RFC822   %s \n", t.Format(time.RFC822))
-	fmt.Printf("RFC850   %s \n", t.Format(time.RFC850))
-	fmt.Printf("RFC1123  %s \n", t.Format(time.RFC1123))
-	fmt.Printf("RFC3339  %s \n", t.Format(time.RFC3339))
-	fmt.Printf("UnixDate %s \n", t.Format(time.UnixDate))
-	fmt.Printf("RubyDate %s \n", t.Format(time.RubyDate))
+func PrintFormats(t time.Time, cmd *cobra.Command) {
+	fmt.Fprintf(cmd.OutOrStdout(), "ANSIC    %s \n", t.Format(time.ANSIC))
+	fmt.Fprintf(cmd.OutOrStdout(), "Kitchen  %s \n", t.Format(time.Kitchen))
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC822   %s \n", t.Format(time.RFC822))
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC850   %s \n", t.Format(time.RFC850))
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC1123  %s \n", t.Format(time.RFC1123))
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC3339  %s \n", t.Format(time.RFC3339))
+	fmt.Fprintf(cmd.OutOrStdout(), "UnixDate %s \n", t.Format(time.UnixDate))
+	fmt.Fprintf(cmd.OutOrStdout(), "RubyDate %s \n", t.Format(time.RubyDate))
 }
 
 func PrintNow() {

@@ -3,7 +3,6 @@ package cmd
 import (
 	"epc/pkg"
 	"github.com/spf13/cobra"
-	"time"
 )
 
 var fmtCmd = &cobra.Command{
@@ -11,8 +10,8 @@ var fmtCmd = &cobra.Command{
 	Long:  "fmt prints all predefined available time formats.",
 	Short: "fmt print time formats.",
 	Run: func(cmd *cobra.Command, args []string) {
-		now := time.Now()
-		pkg.PrintFormats(now)
+		now := t.Now()
+		pkg.PrintFormats(now, cmd)
 	}}
 
 func init() {

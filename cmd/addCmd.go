@@ -1,13 +1,10 @@
 package cmd
 
 import (
-	"epc/pkg"
 	"fmt"
 	"github.com/spf13/cobra"
 	"time"
 )
-
-var t pkg.StaticTime
 
 var addCmd = &cobra.Command{
 	Use:   "add year/month/date. Can be positive or negative value.",
@@ -26,17 +23,38 @@ var addCmd = &cobra.Command{
 		if err != nil {
 			fmt.Println(err)
 		}
-		//t = &pkg.RealTime{}
-		//t.Now()
-		now := time.Now()
+
+		now := t.Now()
 		date := now.AddDate(year, month, day)
 
-		fmt.Fprintf(cmd.OutOrStdout(), "\033 \u2554 \n")
-		fmt.Fprintf(cmd.OutOrStdout(), "\u2551 \033[38;5;156m Now %s \n", now.Format(time.UnixDate))
-		fmt.Fprintf(cmd.OutOrStdout(), "Add %d year(s) %d month(s) %d day(s) \n", year, month, day)
-		fmt.Fprintf(cmd.OutOrStdout(), "%s \n", date.Format(time.UnixDate))
-		fmt.Fprintf(cmd.OutOrStdout(), "\t Unix epoch seconds: %d \n", date.Unix())
-		fmt.Fprintf(cmd.OutOrStdout(), "\t Unix epoch miliseconds: %d \n", now.UnixMilli())
+		//_, err = fmt.Fprintf(cmd.OutOrStdout(), "\033 \u2554 \n")
+		//if err != nil {
+		//	return
+		//}
+		//_, err = fmt.Fprintf(cmd.OutOrStdout(), "\u2551 \033[38;5;156m Now %s \n", now.Format(time.UnixDate))
+		//if err != nil {
+		//	return
+		//}
+		_, err = fmt.Fprintf(cmd.OutOrStdout(), "Now %s\n", now.Format(time.UnixDate))
+		if err != nil {
+			return
+		}
+		_, err = fmt.Fprintf(cmd.OutOrStdout(), "Add %d year(s) %d month(s) %d day(s)\n", year, month, day)
+		if err != nil {
+			return
+		}
+		_, err = fmt.Fprintf(cmd.OutOrStdout(), "%s\n", date.Format(time.UnixDate))
+		if err != nil {
+			return
+		}
+		_, err = fmt.Fprintf(cmd.OutOrStdout(), "\t Unix epoch seconds: %d\n", date.Unix())
+		if err != nil {
+			return
+		}
+		_, err = fmt.Fprintf(cmd.OutOrStdout(), "\t Unix epoch miliseconds: %d\n", now.UnixMilli())
+		if err != nil {
+			return
+		}
 	},
 }
 

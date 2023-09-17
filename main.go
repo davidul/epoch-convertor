@@ -1,8 +1,12 @@
 package main
 
-import "epc/cmd"
+import (
+	"epc/cmd"
+	"epc/pkg"
+)
 
 func main() {
+	cmd.SetStaticTime(&pkg.RealTime{})
 	cmd.Execute()
 	//components := &view.Components{
 	//	TzTable:       ui.NewTimezoneTable(),
