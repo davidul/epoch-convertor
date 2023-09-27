@@ -57,9 +57,12 @@ Unix seconds = 1986993681
 
 ```shell
 ./epc now
-Current time is: 2022-12-10T07:14:04 
-Unix epoch seconds: 1670652844 
-Unix epoch miliseconds: 1670652844873 
+Current date and time is: 2023-09-27T19:01:34
+Unix epoch seconds: 1695834094
+Unix epoch miliseconds: 1695834094048
+Unix epoch microseconds: 1695834094048884
+Local Timezone: CEST
+Offset: 7200
 ```
 
 `stopwatch` runs stop watch in terminal
@@ -68,10 +71,20 @@ Unix epoch miliseconds: 1670652844873
 00:00:05
 ```
 
-`parse` converts unix time stamp to date
+`parse` converts unix time stamp to date, you can 
+provide the precision of the timestamp.
+```shell
+--micros          unix time in microseconds
+--millis          unix time in millis
+--seconds         unix time in seconds
+```
+If no precision is provided, it will try all.
 ```shell
 ./epc parse 1234556666 
-Thursday, 01-Jan-70 01:00:00 CET 
+From millis Thursday, 15-Jan-70 07:55:56 CET 
+From micros Thursday, 01-Jan-70 01:20:34 CET 
+From seconds Friday, 13-Feb-09 21:24:26 CET 
+
 ```
 
 fmt - prints current time in different formats

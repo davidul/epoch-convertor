@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"strconv"
 	"time"
 )
 
@@ -13,37 +14,51 @@ var parseCmd = &cobra.Command{
 		"use milliseconds, microseconds or seconds to parse timestamp",
 	Run: func(cmd *cobra.Command, args []string) {
 
-		millis, err := cmd.Flags().GetInt64("millis")
+		value, err := strconv.ParseInt(args[0], 10, 64)
 		if err != nil {
 			fmt.Println(err)
+			return
 		}
-		if millis != -1 {
-			fmt.Fprintf(cmd.OutOrStdout(), "%s \n", time.UnixMilli(millis).Format(time.RFC850))
-		}
-
-		micro, err := cmd.Flags().GetInt64("micro")
+		millis, err := cmd.Flags().GetBool("millis")
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		if micro != -1 {
-			fmt.Fprintf(cmd.OutOrStdout(), "%s \n", time.UnixMicro(micro).Format(time.RFC850))
-		}
-
-		seconds, err := cmd.Flags().GetInt64("seconds")
+		micro, err := cmd.Flags().GetBool("micro")
 		if err != nil {
 			fmt.Println(err)
 		}
-		if seconds != -1 {
-			fmt.Fprintf(cmd.OutOrStdout(), "%s \n", time.Unix(seconds, 0).Format(time.RFC850))
+
+		seconds, err := cmd.Flags().GetBool("seconds")
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		// if none is provided, try all
+		if !millis && !micro && !seconds {
+			millis = true
+			micro = true
+			seconds = true
+		}
+
+		if millis {
+			fmt.Fprintf(cmd.OutOrStdout(), "From millis %s \n", time.UnixMilli(value).Format(time.RFC850))
+		}
+
+		if micro {
+			fmt.Fprintf(cmd.OutOrStdout(), "From micros %s \n", time.UnixMicro(value).Format(time.RFC850))
+		}
+
+		if seconds {
+			fmt.Fprintf(cmd.OutOrStdout(), "From seconds %s \n", time.Unix(value, 0).Format(time.RFC850))
 		}
 
 	},
 }
 
 func init() {
-	parseCmd.Flags().Int64("seconds", -1, "seconds")
-	parseCmd.Flags().Int64("millis", -1, "milliseconds")
-	parseCmd.Flags().Int64("micro", -1, "microseconds")
+	parseCmd.Flags().Bool("seconds", false, "seconds")
+	parseCmd.Flags().Bool("millis", false, "milliseconds")
+	parseCmd.Flags().Bool("micro", false, "microseconds")
 	RootCmd.AddCommand(parseCmd)
 }
