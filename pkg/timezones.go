@@ -2,9 +2,8 @@ package pkg
 
 import (
 	"epc/models"
+	"epc/pkg/csv"
 	"fmt"
-	"io/ioutil"
-	"strings"
 	"time"
 )
 
@@ -18,27 +17,17 @@ import (
 
 func CountryCodes() map[string]string {
 
-	tzIsoFile, err := ioutil.ReadFile("/usr/share/zoneinfo/iso3166.tab")
-	if err != nil {
-		fmt.Println(err)
-	}
+	parser := csv.NewParser('\t', '#', nil)
+	tzIsoFile := parser.ParseFile(csv.ReadFileAsByteBuffer("/usr/share/zoneinfo/iso3166.tab"))
+	//tzIsoFile, err := ioutil.ReadFile("/usr/share/zoneinfo/iso3166.tab")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
 
 	tzMap := make(map[string]string)
-
-	lines := strings.Split(string(tzIsoFile), "\n")
-	for i := range lines {
-		line := lines[i]
-		if index := strings.Index(line, "#"); index > -1 {
-			line = line[:index]
-		}
-
-		trimedLine := strings.TrimSpace(line)
-		if trimedLine == "" {
-			continue
-		}
-		tz := strings.Split(trimedLine, "\t")
-		tzMap[tz[0]] = tz[1]
-
+	for i := range tzIsoFile.Records {
+		record := tzIsoFile.Records[i]
+		tzMap[record.Value[0]] = record.Value[1]
 	}
 
 	return tzMap
@@ -64,42 +53,23 @@ func CountryCodes() map[string]string {
 //AO	-0848+01314	Africa/Luanda
 //AQ	-7750+16636	Antarctica/McMurdo	New Zealand time - McMurdo, South Pole
 func ReadZoneInfoISO() map[string]*models.ZoneInfo {
-	file, err := ioutil.ReadFile("/usr/share/zoneinfo/zone.tab")
-	if err != nil {
-		fmt.Println(err)
-		return nil
-	}
+
+	parser := csv.NewParser('\t', '#', nil)
+	file := parser.ParseFile(csv.ReadFileAsByteBuffer("/usr/share/zoneinfo/zone.tab"))
 
 	tzMap := make(map[string]*models.ZoneInfo)
 
-	lines := strings.Split(string(file), "\n")
-
-	for i := range lines {
-		line := lines[i]
-		if index := strings.Index(line, "#"); index > -1 {
-			line = line[:index]
-		}
-
-		trimedLine := strings.TrimSpace(line)
-		if trimedLine == "" {
-			continue
-		}
-
-		split := strings.Split(trimedLine, "\t")
-		var comment string
-		if len(split) == 4 {
-			comment = split[3]
-		} else {
-			comment = ""
-		}
+	for i := range file.Records {
+		record := file.Records[i]
+		fmt.Println(len(record.Value))
 		info := &models.ZoneInfo{
-			CountryCode: split[0],
-			Coordinates: split[1],
-			TimeZone:    split[2],
-			Comments:    comment,
+			CountryCode: record.Value[0],
+			Coordinates: record.Value[1],
+			TimeZone:    record.Value[2],
+			Comments:    "",
 		}
 
-		tzMap[split[2]] = info
+		tzMap[record.Value[2]] = info
 
 	}
 

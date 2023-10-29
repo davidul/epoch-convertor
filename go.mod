@@ -3,7 +3,7 @@ module epc
 go 1.18
 
 require (
-	github.com/davidul/buffers v0.1.1
+	github.com/davidul/buffers v0.1.2-0.20231029051256-4084032e21c0
 	github.com/davidul/go-vic v0.1.0
 	github.com/gdamore/tcell/v2 v2.6.0
 	github.com/rivo/tview v0.0.0-20231024211518-8b7bcf9883df
@@ -31,6 +31,7 @@ require (
 	github.com/spf13/cast v1.5.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/stretchr/objx v0.5.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	golang.org/x/sys v0.12.0 // indirect
 	golang.org/x/term v0.5.0 // indirect

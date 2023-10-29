@@ -4,7 +4,9 @@ import (
 	"epc/models"
 	"epc/pkg"
 	"fmt"
+	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -17,11 +19,35 @@ var list []*models.TimeZoneInfo
 
 var zoneMap map[string]*models.TimeZoneInfo
 
+func simpleRegexSearcher(items []string) func(input string, index int) bool {
+	return func(input string, index int) bool {
+		reg, err := regexp.Compile(fmt.Sprintf("%s", input))
+		if err != nil {
+			return false
+		}
+
+		return reg.MatchString(items[index])
+	}
+}
+
 var tmzCmd = &cobra.Command{
 	Use:   "tz to list and select timezone",
 	Long:  "tz long",
 	Short: "tz",
 	Run: func(cmd *cobra.Command, args []string) {
+		zones := pkg.ZoneList(iso)
+		p := promptui.Select{
+			Label:             "Select Timezone",
+			Items:             zones,
+			StartInSearchMode: true,
+			Searcher:          simpleRegexSearcher(zones),
+		}
+
+		_, result, err3 := p.Run()
+		if err3 != nil {
+			fmt.Println(err3)
+		}
+		fmt.Println(result)
 
 		filter := cmd.Flag("filter")
 
@@ -64,7 +90,6 @@ var tmzCmd = &cobra.Command{
 			if err != nil {
 				fmt.Println(err)
 			}
-			//pkg.PrintDate(now.In(location))
 
 			return
 		}
