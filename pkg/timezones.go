@@ -3,7 +3,6 @@ package pkg
 import (
 	"epc/models"
 	"epc/pkg/csv"
-	"fmt"
 	"time"
 )
 
@@ -37,21 +36,21 @@ func CountryCodes() map[string]string {
 // returns map, key is time zone
 // Country code sample
 //
-//# This table is intended as an aid for users, to help them select timezones
-//# appropriate for their practical needs.  It is not intended to take or
-//# endorse any position on legal or territorial claims.
-//#
-//#country-
-//#code	coordinates	TZ			comments
-//AD	+4230+00131	Europe/Andorra
-//AE	+2518+05518	Asia/Dubai
-//AF	+3431+06912	Asia/Kabul
-//AG	+1703-06148	America/Antigua
-//AI	+1812-06304	America/Anguilla
-//AL	+4120+01950	Europe/Tirane
-//AM	+4011+04430	Asia/Yerevan
-//AO	-0848+01314	Africa/Luanda
-//AQ	-7750+16636	Antarctica/McMurdo	New Zealand time - McMurdo, South Pole
+// # This table is intended as an aid for users, to help them select timezones
+// # appropriate for their practical needs.  It is not intended to take or
+// # endorse any position on legal or territorial claims.
+// #
+// #country-
+// #code	coordinates	TZ			comments
+// AD	+4230+00131	Europe/Andorra
+// AE	+2518+05518	Asia/Dubai
+// AF	+3431+06912	Asia/Kabul
+// AG	+1703-06148	America/Antigua
+// AI	+1812-06304	America/Anguilla
+// AL	+4120+01950	Europe/Tirane
+// AM	+4011+04430	Asia/Yerevan
+// AO	-0848+01314	Africa/Luanda
+// AQ	-7750+16636	Antarctica/McMurdo	New Zealand time - McMurdo, South Pole
 func ReadZoneInfoISO() map[string]*models.ZoneInfo {
 
 	parser := csv.NewParser('\t', '#', nil)
@@ -61,7 +60,6 @@ func ReadZoneInfoISO() map[string]*models.ZoneInfo {
 
 	for i := range file.Records {
 		record := file.Records[i]
-		fmt.Println(len(record.Value))
 		info := &models.ZoneInfo{
 			CountryCode: record.Value[0],
 			Coordinates: record.Value[1],
