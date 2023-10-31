@@ -11,7 +11,8 @@ var nowCmd = &cobra.Command{
 	Short: "now",
 	Long:  "now displays current time in unix epoch",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		defaultFormat := viper.GetString("default-format")
+		defaultFormat := viper.GetStringMapString("date-formats")["default-format"]
+		fmt.Println("Default format", defaultFormat)
 		if defaultFormat == "" {
 			defaultFormat = "2006-01-02 15:04:05"
 		}
