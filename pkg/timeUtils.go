@@ -8,14 +8,27 @@ import (
 )
 
 func PrintFormats(t time.Time, cmd *cobra.Command) {
+
+	fmt.Fprintf(cmd.OutOrStdout(), "Reference    %s \n", t.Format(time.Layout))
 	fmt.Fprintf(cmd.OutOrStdout(), "ANSIC    %s \n", t.Format(time.ANSIC))
 	fmt.Fprintf(cmd.OutOrStdout(), "Kitchen  %s \n", t.Format(time.Kitchen))
 	fmt.Fprintf(cmd.OutOrStdout(), "RFC822   %s \n", t.Format(time.RFC822))
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC822Z %s \n", t.Format(time.RFC822Z))
 	fmt.Fprintf(cmd.OutOrStdout(), "RFC850   %s \n", t.Format(time.RFC850))
 	fmt.Fprintf(cmd.OutOrStdout(), "RFC1123  %s \n", t.Format(time.RFC1123))
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC1123Z %s \n", t.Format(time.RFC1123Z))
 	fmt.Fprintf(cmd.OutOrStdout(), "RFC3339  %s \n", t.Format(time.RFC3339))
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC3339Nano %s \n", t.Format(time.RFC3339Nano))
 	fmt.Fprintf(cmd.OutOrStdout(), "UnixDate %s \n", t.Format(time.UnixDate))
 	fmt.Fprintf(cmd.OutOrStdout(), "RubyDate %s \n", t.Format(time.RubyDate))
+	fmt.Fprintf(cmd.OutOrStdout(), "Stamp %s \n", t.Format(time.Stamp))
+	fmt.Fprintf(cmd.OutOrStdout(), "Stamp Milli %s \n", t.Format(time.StampMilli))
+	fmt.Fprintf(cmd.OutOrStdout(), "Stamp Micro %s \n", t.Format(time.StampMicro))
+	fmt.Fprintf(cmd.OutOrStdout(), "Stamp Nano %s \n", t.Format(time.StampNano))
+	fmt.Fprintf(cmd.OutOrStdout(), "DateOnly %s \n", t.Format(time.DateOnly))
+	fmt.Fprintf(cmd.OutOrStdout(), "DateOnly %s \n", t.Format(time.DateTime))
+	fmt.Fprintf(cmd.OutOrStdout(), "TimeOnly %s \n", t.Format(time.TimeOnly))
+
 }
 
 func PrintNow() {
