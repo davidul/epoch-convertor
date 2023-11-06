@@ -31,6 +31,28 @@ func PrintFormats(t time.Time, cmd *cobra.Command) {
 
 }
 
+func PrintReference(cmd *cobra.Command) {
+	fmt.Fprintf(cmd.OutOrStdout(), "Reference    %s \n", time.Layout)
+	fmt.Fprintf(cmd.OutOrStdout(), "ANSIC    %s \n", time.ANSIC)
+	fmt.Fprintf(cmd.OutOrStdout(), "Kitchen  %s \n", time.Kitchen)
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC822   %s \n", time.RFC822)
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC822Z %s \n", time.RFC822Z)
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC850   %s \n", time.RFC850)
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC1123  %s \n", time.RFC1123)
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC1123Z %s \n", time.RFC1123Z)
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC3339  %s \n", time.RFC3339)
+	fmt.Fprintf(cmd.OutOrStdout(), "RFC3339Nano %s \n", time.RFC3339Nano)
+	fmt.Fprintf(cmd.OutOrStdout(), "UnixDate %s \n", time.UnixDate)
+	fmt.Fprintf(cmd.OutOrStdout(), "RubyDate %s \n", time.RubyDate)
+	fmt.Fprintf(cmd.OutOrStdout(), "Stamp %s \n", time.Stamp)
+	fmt.Fprintf(cmd.OutOrStdout(), "Stamp Milli %s \n", time.StampMilli)
+	fmt.Fprintf(cmd.OutOrStdout(), "Stamp Micro %s \n", time.StampMicro)
+	fmt.Fprintf(cmd.OutOrStdout(), "Stamp Nano %s \n", time.StampNano)
+	fmt.Fprintf(cmd.OutOrStdout(), "DateOnly %s \n", time.DateOnly)
+	fmt.Fprintf(cmd.OutOrStdout(), "DateOnly %s \n", time.DateTime)
+	fmt.Fprintf(cmd.OutOrStdout(), "TimeOnly %s \n", time.TimeOnly)
+}
+
 func PrintNow() {
 	now := time.Now()
 	fmt.Printf("Now is %s \n", now.Format(time.RFC3339))
