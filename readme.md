@@ -24,6 +24,23 @@ Available flags
       --seconds         unix time in seconds (default true)
 ```
 
+For example tomorrow
+
+```shell
+./epc --day 1
+```
+
+Six months ago
+
+```shell
+./epc --month -6
+```
+
+Millis one year ago
+```shell
+./epc --year -1 --millis
+```
+
 Available commands:
     
 ```shell
@@ -33,6 +50,8 @@ Available commands:
     now         prints current time
     parse       converts unix time stamp to date
     stopwatch   runs stop watch in terminal
+    tz          tz
+    unix        unix converts unix timestamp with different precisions
   ```
 
 Enable disable seconds/milliseconds with
@@ -53,6 +72,8 @@ Time in custom format 2032-12-18T15:41:21+01:00
 Unix seconds = 1986993681 
 ```
 
+## now
+
 `now` just prints current data with unix timestamps.
 
 ```shell
@@ -65,13 +86,17 @@ Local Timezone: CEST
 Offset: 7200
 ```
 
+## stopwatch
+
 `stopwatch` runs stop watch in terminal
 ```shell
 ./epc stopwatch 
 00:00:05
 ```
 
-`parse` converts unix time stamp to date, you can 
+## unix
+
+`unix` converts unix time stamp to date, you can 
 provide the precision of the timestamp.
 ```shell
 --micros          unix time in microseconds
@@ -87,17 +112,39 @@ From seconds Friday, 13-Feb-09 21:24:26 CET
 
 ```
 
+## fmt
+
 fmt - prints current time in different formats
 
 ```shell
 ./epc fmt
-ANSIC    Wed Dec  7 06:22:00 2022 
-Kitchen  6:22AM 
-RFC822   07 Dec 22 06:22 CET 
-RFC850   Wednesday, 07-Dec-22 06:22:00 CET 
-RFC1123  Wed, 07 Dec 2022 06:22:00 CET 
-RFC3339  2022-12-07T06:22:00+01:00 
-UnixDate Wed Dec  7 06:22:00 CET 2022 
-RubyDate Wed Dec 07 06:22:00 +0100 2022 
+
+ANSIC    Sun Nov  5 17:09:13 2023 
+Kitchen  5:09PM 
+RFC822   05 Nov 23 17:09 CET 
+RFC822Z 05 Nov 23 17:09 +0100 
+RFC850   Sunday, 05-Nov-23 17:09:13 CET 
+RFC1123  Sun, 05 Nov 2023 17:09:13 CET 
+RFC1123Z Sun, 05 Nov 2023 17:09:13 +0100 
+RFC3339  2023-11-05T17:09:13+01:00 
+RFC3339Nano 2023-11-05T17:09:13.083371+01:00 
+UnixDate Sun Nov  5 17:09:13 CET 2023 
+RubyDate Sun Nov 05 17:09:13 +0100 2023 
+Stamp Nov  5 17:09:13 
+Stamp Milli Nov  5 17:09:13.083 
+Stamp Micro Nov  5 17:09:13.083371 
+Stamp Nano Nov  5 17:09:13.083371000 
+DateOnly 2023-11-05 
+DateOnly 2023-11-05 17:09:13 
+TimeOnly 17:09:13 
 ```
 
+You can include the reference format itself
+```shell
+./epc fmt --ref
+```
+
+# parse
+
+
+## tz
