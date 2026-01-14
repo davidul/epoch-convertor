@@ -3,62 +3,49 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"strconv"
+	"github.com/spf13/viper"
 	"time"
 )
 
 var parseCmd = &cobra.Command{
-	Use:   "parse unix timestamp with different precisions",
-	Short: "parse with different precisions",
-	Long: "parse unix timestamp with different precisions \n" +
-		"use milliseconds, microseconds or seconds to parse timestamp",
+	Use:   "parse date/time in different formats",
+	Long:  "parse",
+	Short: "parse.",
 	Run: func(cmd *cobra.Command, args []string) {
-
-		value, err := strconv.ParseInt(args[0], 10, 64)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		millis, err := cmd.Flags().GetBool("millis")
+		date, err := cmd.Flags().GetString("date")
+		fmt.Println("Date", date)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		micro, err := cmd.Flags().GetBool("micro")
+		format, err := cmd.Flags().GetString("in")
+		if err != nil {
+			fmt.Println(err)
+		}
+		if format == "" {
+			mapString := viper.GetStringMapString("date-formats")
+			format = mapString["default-format"]
+		}
+
+		parse, err := time.Parse(format, date)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		seconds, err := cmd.Flags().GetBool("seconds")
-		if err != nil {
-			fmt.Println(err)
-		}
+		//out, err := cmd.Flags().GetString("out")
+		//if err != nil {
+		//	fmt.Println(err)
+		//}
 
-		// if none is provided, try all
-		if !millis && !micro && !seconds {
-			millis = true
-			micro = true
-			seconds = true
-		}
-
-		if millis {
-			fmt.Fprintf(cmd.OutOrStdout(), "From millis %s \n", time.UnixMilli(value).Format(time.RFC850))
-		}
-
-		if micro {
-			fmt.Fprintf(cmd.OutOrStdout(), "From micros %s \n", time.UnixMicro(value).Format(time.RFC850))
-		}
-
-		if seconds {
-			fmt.Fprintf(cmd.OutOrStdout(), "From seconds %s \n", time.Unix(value, 0).Format(time.RFC850))
-		}
-
+		s := parse.Format(time.Stamp)
+		fmt.Println(s)
+		fmt.Println(parse.Unix())
 	},
 }
 
 func init() {
-	parseCmd.Flags().Bool("seconds", false, "seconds")
-	parseCmd.Flags().Bool("millis", false, "milliseconds")
-	parseCmd.Flags().Bool("micro", false, "microseconds")
+	parseCmd.Flags().String("in", "", "in")
+	parseCmd.Flags().String("date", "2006-01-02T15:04:05", "date")
+	parseCmd.Flags().String("out", "", "out")
 	RootCmd.AddCommand(parseCmd)
 }
