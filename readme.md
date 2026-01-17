@@ -12,6 +12,19 @@ Time in custom format 2022-12-09T15:03:14+01:00
 Unix seconds = 1670594594
 ```
 
+Available commands:
+
+```shell
+    fmt         prints current time in different formats
+    add         adds time to current time
+    help        Help about any command
+    now         prints current time
+    parse       converts unix time stamp to date
+    stopwatch   runs stop watch in terminal
+    tz          tz
+    unix        unix converts unix timestamp with different precisions
+  ```
+
 Available flags
 
 ```
@@ -24,7 +37,7 @@ Available flags
       --seconds         unix time in seconds (default true)
 ```
 
-For example tomorrow
+For example tomorrow (+1 day)
 
 ```shell
 ./epc --day 1
@@ -40,19 +53,6 @@ Millis one year ago
 ```shell
 ./epc --year -1 --millis
 ```
-
-Available commands:
-    
-```shell
-    fmt         prints current time in different formats
-    add         adds time to current time
-    help        Help about any command
-    now         prints current time
-    parse       converts unix time stamp to date
-    stopwatch   runs stop watch in terminal
-    tz          tz
-    unix        unix converts unix timestamp with different precisions
-  ```
 
 Enable disable seconds/milliseconds with
 `--seconds` and `--millis`
@@ -98,6 +98,11 @@ Offset: 7200
 
 `unix` converts unix time stamp to date, you can 
 provide the precision of the timestamp.
+
+```shell
+./epc unix 1234556666 --millis
+```
+
 ```shell
 --micros          unix time in microseconds
 --millis          unix time in millis
@@ -146,5 +151,19 @@ You can include the reference format itself
 
 # parse
 
+```shell
+./epc parse --date 2006-01-03T15:04:05
+./epc parse 2006-01-02T15:04:05
+./epc parse --date "2023-09-15T14:30:00" --in "2006-01-02T15:04:05"
+
+./epc parse --date "2023-09-15T14:30:00" --in "2006-01-02T15:04:05" --out unix
+
+./epc parse --date "2023-09-15T14:30:00" --in "2006-01-02T15:04:05" --tz "Europe/London" --out rfc3339
+
+./epc parse --date "2023-09-15T14:30:00" --in "2006-01-02T15:04:05" --out "2006-01-02 15:04:05"
+
+
+
+```
 
 ## tz
